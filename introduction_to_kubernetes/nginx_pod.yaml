@@ -1,0 +1,10 @@
+apiVersion: v1 # KubernetesのAPIバージョン
+kind: Pod # 対象オブジェクト
+metadata:
+  name: my-first-pod
+  labels:
+    component: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx:latest

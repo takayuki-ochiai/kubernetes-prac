@@ -1,0 +1,10 @@
+# 踏み台用Podを作る
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bastion
+spec:
+  containers:
+    - name: bastion
+      image: debian:stretch
+      command: ["sleep", "infinity"]

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-first-service
+spec:
+  # どんなラベルが付いているPodと通信できるようにするかselectorで指定する
+  selector:
+    component: nginx
+  ports:
+    - port: 80 # serviceでEXPOSEするポート。クラスタ内の他のPodなどからアクセスする場合はこっちを使う
+      targetPort: 80 # 転送先Podのポート
+      protocol: TCP
+      nodePort: 30000 # NodePortを指定したときにEXPOSEするポート
+  # ClusterIPのサービスはKubernetes クラスタ内部の Pod からしかアクセスできない。
+  # なのでbastion Podとかからアクセスするときしか使えない
+  # NodePortを指定すると、このServiceが動いているNodeのIPアドレスにnodePortで指定したportでアクセスするとこのサービスにアクセスできるようになる
+  type: NodePort

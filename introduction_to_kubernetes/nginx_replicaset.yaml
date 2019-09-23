@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx-replicaset
+  labels:
+    component: nginx
+spec:
+  replicas: 3
+  # component: nginxのラベルを持つPodの数が3になるように調整してくれる
+  selector:
+    matchLabels:
+      component: nginx
+  # この ReplicaSet が作成する Pod の定義この ReplicaSet が作成する Pod の定義
+  template:
+    metadata:
+      name: nginx-replicaset-pod
+      labels:
+        component: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
