@@ -1,0 +1,13 @@
+apiVersion: v1 # KubernetesのAPIバージョン
+kind: Pod # 対象オブジェクト
+metadata: # メタデータ
+  name: nginx # メタデータ名
+  labels: # ラベル
+    name: nginx
+    role: web
+spec: # podオブジェクトの内容
+  containers:
+    - name: web-container # コンテナの名前
+      image: nginx:1.15
+      ports:
+        - containerPort: 80 #Podの解放ポート
