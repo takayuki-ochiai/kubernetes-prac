@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: lifecycle-check
+spec:
+  initContainers:
+    - name: init
+      image: alpine
+      command: ["sh", "-c"]
+      args:
+        - |
+          echo Start; sleep 3; echo End. ; exit 0
+  containers:
+    - name: app
+      image: alpine
+      command: ["sh", "-c"]
+      args:
+        - |
+          trap 'echo "Trapped SIGTERM"; sleep 3; echo "See you!!"; exit 0' TERM
+
+          echo Start.
+
+          while true
+          do
+              date
+              sleep 1
+          done
+      lifecycle:
+        postStart:
+          exec:
+            command:
+              - sh
+              - -c
+              - |
+                echo hook postStart.
+                date
+                exit 0
+        preStop:
+          exec:
+            command:
+              - sh
+              - -c
+              - |
+                echo hook preStop.
+                date
+                exit 0
+  restartPolicy: Never
+  terminationGracePeriodSeconds: 30
