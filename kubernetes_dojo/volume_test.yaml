@@ -3,6 +3,17 @@ kind: Pod
 metadata:
   name: date-tail
 spec:
+  initContainers:
+    - name: touch
+      image: alpine
+      command: ["sh", "-c"]
+      args:
+      - |
+        echo Initialize...
+        touch /var/log/date-tail/output.log
+      volumeMounts:
+        - name: log-volume
+          mountPath: /var/log/date-tail
   containers:
     - name: date
       image: alpine
