@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kustomize-pod
+  labels:
+    app: webphp
+spec:
+  containers:
+    - name: nginx
+      image: sasenomura/nginx:latest
+      ports:
+        - containerPort: 80
