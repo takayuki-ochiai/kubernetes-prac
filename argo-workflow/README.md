@@ -32,7 +32,7 @@ $ kubectl apply -n argo -f install.yaml -f workflow-controller-configmap.yaml
 
 ```bash
 $ kubectl delete -n argo -f install.yaml
-$ helm uninstall argo-artifacts
+$ helm uninstall argo-artifacts --namespace argo
 ```
 
 ## Workflowの実行
