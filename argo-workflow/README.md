@@ -38,5 +38,5 @@ $ helm uninstall argo-artifacts --namespace argo
 ## Workflowの実行
 
 ```bash
-$ argo submit tasks/artifacts.yaml -n argo
+$ argo submit -n argo --watch tasks/artifacts.yaml 
 ```
