@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-existing-volume
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: /Users/Shared/k8s/kubernetes-prac/argo-workflow
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-existing-volume
+spec:
+  storageClassName: manual
+  volumeName: my-existing-volume
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 1Gi
