@@ -12,6 +12,12 @@ brew install argoproj/tap/argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v1.4.2/manifests/install.yaml
 ```
 
+## Stop
+
+```bash
+kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v1.4.2/manifests/install.yaml
+```
+
 ## APIサーバーへのアクセス
 
 参考) https://argoproj.github.io/argo-cd/getting_started/#3-access-the-argo-cd-api-server
