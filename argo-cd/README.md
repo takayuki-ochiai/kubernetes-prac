@@ -9,13 +9,13 @@ brew install argoproj/tap/argocd
 ## Start
 
 ```bash
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v1.4.2/manifests/install.yaml
+kustomize build manifests/overlays/ | kubectl apply -n argocd -f -
 ```
 
 ## Stop
 
 ```bash
-kubectl delete -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v1.4.2/manifests/install.yaml
+kustomize build manifests/overlays/ | kubectl delete -n argocd -f -
 ```
 
 ## APIサーバーへのアクセス
