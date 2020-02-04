@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guestbook
+  namespace: argocd
+spec:
+  # アプリケーションが所属するAppProjectのこと
+  # defaultはadmin向けのprojectで、ArgoCDで可能なすべての権限が許可されている
+  project: default
+  source:
+    repoURL: https://github.com/takayuki-ochiai/kubernetes-prac.git
+    targetRevision: HEAD
+    path: argo-cd/watched-manifests
+  destination:
+    # デプロイ先のk8sクラスタ
+    server: https://kubernetes.default.svc
+    # デプロイ先のnamespace
+    namespace: default
+  syncPolicy:
+    automated:
+      # Gitリポジトリ上にリソースが定義されなくなった時にクラスタ上のリソースを削除するか
+      # falseの場合、自動で削除はしてくれないので手動削除が必要
+      prune: false
+      # クラスタでのみリソース変更があり、gitでは変更が検知されない場合に部分的なsyncを認めるかどうか
+      # 要は何らかの理由でアプリケーションが落ちた時に自動で同期して再構築するかどうか
+      selfHeal: true
