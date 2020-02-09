@@ -3,19 +3,20 @@
 ```bash
 kubectl create namespace argocd
 brew install argoproj/tap/argocd
+brew install kubeseal
 ```
 
 
 ## Start
 
 ```bash
-kustomize build manifests/overlays/ | kubectl apply -n argocd -f -
+kustomize build manifests/overlays/ | kubectl apply -f -
 ```
 
 ## Stop
 
 ```bash
-kustomize build manifests/overlays/ | kubectl delete -n argocd -f -
+kustomize build manifests/overlays/ | kubectl delete -f -
 ```
 
 ## APIサーバーへのアクセス
@@ -48,12 +49,5 @@ kubectl get pods -n argocd -l app.kubernetes.io/name=argocd-server -o name | cut
 
 user: admin
 password: 先ほど取得したパスワード
-
-
-## Appの作成
-
-
-### TODO
-- Declarative Setup
 
 

@@ -1,4 +1,11 @@
+namespace: "argocd"
 bases:
-resources:
+  - ./sealed-secrets-controller.yaml # sealed-secrets
   - "github.com/argoproj/argo-cd/manifests/cluster-install?ref=v1.4.2"
+resources:
+  - ./sealed-secrets-key.yaml
   - ./application.yaml
+  - ./argocd-github-private-key.yaml
+patches:
+  - ./argocd-cm.yaml
+

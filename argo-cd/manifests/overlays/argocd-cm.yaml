@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+data:
+  repositories: |
+    - url: git@github.com:takayuki-ochiai/private-example-manifests
+      sshPrivateKeySecret:
+        name: github-private-key
+        key: sshPrivateKey

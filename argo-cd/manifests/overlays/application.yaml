@@ -2,15 +2,14 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: guestbook
-  namespace: argocd
 spec:
   # アプリケーションが所属するAppProjectのこと
   # defaultはadmin向けのprojectで、ArgoCDで可能なすべての権限が許可されている
   project: default
   source:
-    repoURL: https://github.com/takayuki-ochiai/kubernetes-prac.git
+    repoURL: git@github.com:takayuki-ochiai/private-example-manifests
     targetRevision: HEAD
-    path: argo-cd/watched-manifests
+    path: watched-manifests
   destination:
     # デプロイ先のk8sクラスタ
     server: https://kubernetes.default.svc
