@@ -1,15 +1,15 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: guestbook
+  name: guestbook-public
 spec:
   # アプリケーションが所属するAppProjectのこと
   # defaultはadmin向けのprojectで、ArgoCDで可能なすべての権限が許可されている
   project: default
   source:
-    repoURL: git@github.com:takayuki-ochiai/private-example-manifests
+    repoURL: https://github.com/takayuki-ochiai/kubernetes-prac.git
     targetRevision: HEAD
-    path: watched-manifests
+    path: argo-cd/watched-manifests
   destination:
     # デプロイ先のk8sクラスタ
     server: https://kubernetes.default.svc
@@ -23,3 +23,22 @@ spec:
       # クラスタでのみリソース変更があり、gitでは変更が検知されない場合に部分的なsyncを認めるかどうか
       # 要は何らかの理由でアプリケーションが落ちた時に自動で同期して再構築するかどうか
       selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  # private repositoryの監視
+  name: guestbook-private
+spec:
+  project: default
+  source:
+    # argocd-cm repositories urlで指定したものである必要がある
+    repoURL: git@github.com:takayuki-ochiai/private-example-manifests
+    targetRevision: HEAD
+    path: watched-manifests
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: false
