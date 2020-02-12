@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: CronWorkflow
+metadata:
+  name: cron-workflow-whalesay
+spec:
+  schedule: "* * * * *"
+  timezone: "Asia/Tokyo"
+  # 読んで字のごとく、複数のワークフローが同時にスケジュールされた場合の処理​​を決定するポリシー
+  # Allow: 全てのタスクを許可。つまり古いjobと新しいjobが並列動作する
+  # Replace: 新しいスケジュールを設定する前に古いものをすべて削除。つまり古いjobが残っていたらterminateされる
+  # Forbid: 古いjobが残っているうちは新しいjobは動きません
+  concurrencyPolicy: "Replace"
+  # concurrencyPolicyなどで新しいjobが動けない状態発生したとき、本来の実行時刻を過ぎても実行したい場合入力
+  # 0だと本来の実行時刻を逃したjobは実行されない。60だと本来の実行時刻から60秒以内に実行可能な状態になれば実行される
+  startingDeadlineSeconds: 0
+  # etcdに保持される成功したワークフローの数。この設定だと4回以上成功すると古いworkflowの結果から削除されていく
+  successfulJobsHistoryLimit: 3
+  # etcdに保持される失敗したワークフローの数。この設定だと2回以上失敗すると古いworkflowの結果から削除されていく
+  failedJobsHistoryLimit: 1
+  workflowSpec:
+    entrypoint: whalesay
+    templates:
+    - name: whalesay
+      container:
+        image: docker/whalesay
+        command: [cowsay]
+        args: ["hello cron workflow!!!!"]
