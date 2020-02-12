@@ -31,8 +31,8 @@ kustomize build manifests/overlays/dev | kubectl apply -f -
 ## 停止
 
 ```bash
-kubectl delete -n argo -f install.yaml
 kustomize build manifests/overlays/dev | kubectl delete -f -
+helm uninstall argo-artifacts --namespace argo
 ```
 
 ## Workflowの実行
