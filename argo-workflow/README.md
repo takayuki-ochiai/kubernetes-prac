@@ -38,5 +38,5 @@ kustomize build manifests/overlays/dev | kubectl delete -f -
 ## Workflowの実行
 
 ```bash
-argo submit -n argo --watch tasks/artifacts.yaml 
+argo submit -n argo --watch workflows/artifacts.yaml 
 ```
