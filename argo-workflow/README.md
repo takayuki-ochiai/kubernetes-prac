@@ -25,14 +25,14 @@ helm install argo-artifacts stable/minio \
   --set defaultBucket.name=argo-workflow-example \
   --set persistence.enabled=false \
   --set fullnameOverride=argo-artifacts
-kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo/v2.4.3/manifests/install.yaml -f workflow-controller-configmap.yaml
+kustomize build manifests/overlays/dev | kubectl apply -f -
 ```
 
 ## 停止
 
 ```bash
 kubectl delete -n argo -f install.yaml
-helm uninstall argo-artifacts --namespace argo
+kustomize build manifests/overlays/dev | kubectl delete -f -
 ```
 
 ## Workflowの実行
